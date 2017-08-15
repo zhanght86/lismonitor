@@ -17,6 +17,8 @@ public class QuartzTest {
             // Grab the Scheduler instance from the Factory
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
+            scheduler.start();
+
             JobDetail jobDetail = newJob(MyJob.class)
                     .withIdentity("job1","group1")
                     .build();
@@ -26,9 +28,16 @@ public class QuartzTest {
                     .startNow()
                     .withSchedule(simpleSchedule().withIntervalInSeconds(5).repeatForever())
                     .build();
-            scheduler.scheduleJob(jobDetail, trigger);
-            // and start it off
-            scheduler.start();
+
+            Trigger.TriggerState state = scheduler.getTriggerState(trigger.getKey());
+            if ("PAUSED".equals(state.name())) {
+                scheduler.resumeTrigger(trigger.getKey());
+                scheduler.resumeAll();
+                scheduler.rescheduleJob(trigger.getKey(), trigger);
+            } else {
+                scheduler.scheduleJob(jobDetail, trigger);
+            }
+
         } catch (SchedulerException e) {
 
         }
