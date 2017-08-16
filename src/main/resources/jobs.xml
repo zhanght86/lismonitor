@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_2_2.xsd"
+                     version="2.2">
+    <schedule>
+        <job>
+            <name>job1</name>
+            <group>QY</group>
+            <description>The job description</description>
+            <job-class>test.MyJob</job-class>
+        </job>
+        <trigger>
+            <simple>
+                <name>trigger1</name>
+                <group>QY</group>
+                <job-name>job1</job-name>
+                <job-group>QY</job-group>
+                <repeat-count>-1</repeat-count>
+                <repeat-interval>5000</repeat-interval>
+            </simple>
+        </trigger>
+
+    </schedule>
+</job-scheduling-data>

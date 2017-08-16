@@ -14,7 +14,6 @@ public class MyJob implements Job {
 
     }
 
-    @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         LOGGER.info("MyJob is executing...." + System.currentTimeMillis());
 //        System.out.println("MyJob is executing...." + System.currentTimeMillis());

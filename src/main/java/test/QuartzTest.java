@@ -1,9 +1,6 @@
 package test;
 
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.Trigger;
-import org.quartz.SchedulerException;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
@@ -38,8 +35,8 @@ public class QuartzTest {
                 scheduler.scheduleJob(jobDetail, trigger);
             }
 
-        } catch (SchedulerException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
