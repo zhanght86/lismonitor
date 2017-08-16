@@ -7,8 +7,8 @@
         <job>
             <name>job1</name>
             <group>QY</group>
-            <description>The job description</description>
-            <job-class>test.MyJob</job-class>
+            <description>qiyue_JOB1</description>
+            <job-class>com.sinosoft.test.MyJob</job-class>
         </job>
         <trigger>
             <simple>
