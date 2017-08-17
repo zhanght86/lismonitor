@@ -27,7 +27,7 @@
 
     <servlet-mapping>
         <servlet-name>QuartzInitializer</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/quartzinit</url-pattern>
     </servlet-mapping>
 
 </web-app>
