@@ -14,7 +14,7 @@ public class MyJob implements Job {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
-        LOGGER.info("JobKey-name:" + jobKey.getName() + ";JobKey-group:" + jobKey.getGroup() + " is running at:" + System.currentTimeMillis());
-//        System.out.println("JobKey-name:" + jobKey.getName() + ";JobKey-group:" + jobKey.getGroup() + " is running at:" + System.currentTimeMillis());
+//        LOGGER.info("JobKey-name:" + jobKey.getName() + ";JobKey-group:" + jobKey.getGroup() + " is running at:" + System.currentTimeMillis());
+        System.out.println("JobKey-name:" + jobKey.getName() + ";JobKey-group:" + jobKey.getGroup() + " is running at:" + System.currentTimeMillis());
     }
 }
