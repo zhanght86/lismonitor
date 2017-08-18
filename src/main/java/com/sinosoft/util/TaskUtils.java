@@ -2,7 +2,6 @@ package com.sinosoft.util;
 
 import com.sinosoft.domain.ScheduleJob;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.*;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,15 +44,15 @@ public class TaskUtils {
                 method.invoke(object);
             } catch (IllegalAccessException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
             } catch (IllegalArgumentException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
             } catch (InvocationTargetException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
             }
         }
-        System.out.println("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
+        LOGGER.info("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
     }
 }
