@@ -1,9 +1,12 @@
 package com.sinosoft.dao;
 
 import com.sinosoft.domain.ScheduleJob;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ScheduleJobMapper {
     int deleteByPrimaryKey(Long jobId);
 

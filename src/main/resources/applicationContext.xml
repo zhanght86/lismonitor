@@ -16,7 +16,7 @@
 
 
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
-
+    <bean id="springUtils" class="com.sinosoft.util.SpringUtils" />
     <!--本地数据源配置-->
     <bean name="dataSource_LOCAL" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="${driver}" />
@@ -72,7 +72,7 @@
         <property name="maxWait" value="60000" />
         <!-- <property name="poolPreparedStatements" value="true" /> <property
          name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
-        <property name="validationQuery" value="${validationQuery}" />
+        <property name="validationQuery" value="${lis_validationQuery}" />
         <property name="testOnBorrow" value="false" />
         <property name="testOnReturn" value="false" />
         <property name="testWhileIdle" value="true" />
@@ -105,11 +105,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:MyBatisConfiguration.xml" />
-        <property name="mapperLocations">
-            <list>
-                <value>classpath:com/sinosoft/dao/mapper/*.xml</value>
-            </list>
-        </property>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
