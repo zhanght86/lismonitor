@@ -27,7 +27,7 @@ public class QYTest {
         String time=format.format(date);
         System.out.println("doTest 开始跑批： " + time);
 
-        List<LinkedHashMap<String,Object>> lis = queryLisService.query("select name from user");
+        List<LinkedHashMap<String,Object>> lis = queryLisService.queryLis("select name from user");
         LOGGER.info(lis.toString());
     }
 }

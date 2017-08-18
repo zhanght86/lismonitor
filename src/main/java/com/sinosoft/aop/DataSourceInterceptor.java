@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Order(0) // execute before @Transactional
 public class DataSourceInterceptor {
 
-    @Pointcut("execution(public * com.sinosoft..*.execute(..))")
+    @Pointcut("execution(public * com.sinosoft.service.QueryLisService.*(..))")
     public void dataSourceLIS(){}
 
 

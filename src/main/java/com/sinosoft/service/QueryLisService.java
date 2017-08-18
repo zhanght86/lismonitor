@@ -17,7 +17,7 @@ public class QueryLisService {
     @Autowired
     private SQLManagerMapper sqlManagerMapper;
 
-    public List<LinkedHashMap<String, Object>> query(String sql) {
+    public List<LinkedHashMap<String, Object>> queryLis(String sql) {
         return sqlManagerMapper.query(sql);
     }
 }
