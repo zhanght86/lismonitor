@@ -16,11 +16,14 @@ import org.springframework.stereotype.Component;
 public class DataSourceInterceptor {
 
     @Pointcut("execution(public * com.sinosoft.service.QueryLisService.*(..))")
-    public void dataSourceLIS(){}
+    public void dataSourceLIS(){
+        DataSourceTypeManager.set(DataSources.LIS);
+    }
+
 
 
     @Before("dataSourceLIS()")
     public void before(JoinPoint jp) {
-        DataSourceTypeManager.set(DataSources.LIS);
+//        DataSourceTypeManager.set(DataSources.LIS);
     }
 }
