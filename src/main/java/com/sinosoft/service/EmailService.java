@@ -20,10 +20,9 @@ public class EmailService {
     SimpleMailMessage mailMessage;
 
     public void sendEmail(String text) {
-        LOGGER.info("<<<<<<<<开始发送邮件>>>>>>>>>" + text);
-        mailMessage.setSubject("监控邮件");
+//        LOGGER.info("<<<<<<<<开始发送邮件>>>>>>>>>" + text);
+        mailMessage.setSubject("二狗子你好蠢");
         mailMessage.setText(text);
-        mailMessage.setTo("jhscheer@qq.com");
         mailSender.send(mailMessage);
     }
 
