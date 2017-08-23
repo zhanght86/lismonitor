@@ -1,9 +1,13 @@
 package com.sinosoft.job.lis;
 
+import com.sinosoft.dao.LisJobMapper;
+import com.sinosoft.dao.LisModuleMapper;
 import com.sinosoft.datasource.DataSourceTypeManager;
 import com.sinosoft.datasource.DataSources;
+import com.sinosoft.domain.*;
 import com.sinosoft.service.EmailService;
 import com.sinosoft.service.QueryLisService;
+import com.sinosoft.service.RuleService;
 import com.sinosoft.util.SpringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,47 +23,20 @@ public class LisJobTemplate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LisJobTemplate.class);
 
+    /** 查询sql服务 */
     private QueryLisService queryLisService = SpringUtils.getBean(QueryLisService.class);
 
+    /** 邮件服务 */
     private EmailService emailService = SpringUtils.getBean(EmailService.class);
 
-    //获取所有对应SQL
-    private List<LinkedHashMap<String,Object>> querySQL(String module, String job) {
-        String sql = "SELECT A.modulename,A.job_name,A.sql_statement,A.description FROM jobconfig a " +
-                " where a.system='LIS' AND A.module='"+module+"' AND a.job_id='"+job+"' ORDER BY A.sql_id";
-        return queryLisService.queryLis(sql);
-    }
+    /** 规则服务 */
+    private RuleService ruleService = SpringUtils.getBean(RuleService.class);
 
-    //执行所有对应SQL
-    private List<String> getSQLResult(List<LinkedHashMap<String,Object>> linkedHashMapList) throws Exception {
-        //错误信息集合
-        List<String> errList = new ArrayList<String>();
-        if (linkedHashMapList == null || linkedHashMapList.size() == 0) {
-            throw new Exception("任务配置有误，请修复！");
-        }
+    private LisJobKey lisJobKey = SpringUtils.getBean(LisJobKey.class);
 
-        Iterator<LinkedHashMap<String,Object>> queryResultIt = linkedHashMapList.iterator();
-        String moduleName;
-        String jobName;
-        String sql_statement;
-        String desc;
-        List<LinkedHashMap<String, Object>> result;
-        while (queryResultIt.hasNext()) {
-            LinkedHashMap<String,Object> linkedHashMap = queryResultIt.next();
-            moduleName = (String) linkedHashMap.get("modulename");
-            jobName = (String) linkedHashMap.get("job_name");
-            sql_statement = (String) linkedHashMap.get("sql_statement");
-            desc = (String) linkedHashMap.get("description");
-//            LOGGER.info(job_name + " : " + sql_statement + " : " + desc);
-            result = executeSQL(sql_statement);
-            if (!isPass(result)) {
-                LOGGER.info("核心系统【" + moduleName + "】模块下定时任务【" + jobName + "】下的规则【" + desc + "】校验未通过。");
-                errList.add("核心系统【" + moduleName + "】模块下定时任务【" + jobName + "】下的规则【" + desc + "】校验未通过。");
-            }
-        }
+    private LisModuleMapper lisModuleMapper = SpringUtils.getBean(LisModuleMapper.class);
 
-        return errList;
-    }
+    private LisJobMapper lisJobMapper = SpringUtils.getBean(LisJobMapper.class);
 
     //切换数据库，并执行sql
     private List<LinkedHashMap<String, Object>> executeSQL(String sql) {
@@ -87,18 +64,48 @@ public class LisJobTemplate {
         return ispass;
     }
 
-    //执行**模块下的**定时任务
-    protected void run(String module, String job) {
-
+    /** 执行**模块下的**定时任务 */
+    protected void run(String module, Long job) {
         try {
-            List<String> errList = getSQLResult(querySQL(module, job));
+            // 查询出模块信息
+            LisModule lisModule = lisModuleMapper.selectByPrimaryKey(module);
+            String moduleName = lisModule.getModule();
+
+            // 查询出本次的计划信息
+            lisJobKey.setId(job);
+            lisJobKey.setModuleid(module);
+            LisJob lisJob = lisJobMapper.selectByPrimaryKey(lisJobKey);
+            String jobName = lisJob.getJob();
+
+            // 查询出本次需执行的规则
+            List<LisRule> lisRules = ruleService.getValidRulesByModuleAndJob(module, job);
+            if (lisRules == null || lisRules.size() == 0) {
+                LOGGER.error("任务配置有误，请修复！");
+                throw new Exception("任务配置有误，请修复！");
+            }
+
+            Iterator<LisRule> lisRuleIt = lisRules.iterator();
+            List<String> errList = new ArrayList<>();
+            List<LinkedHashMap<String, Object>> result;
+            while (lisRuleIt.hasNext()) {
+                LisRule lisRule = lisRuleIt.next();
+                String sql = lisRule.getRulesql();
+                String ruleDesc = lisRule.getRule();
+                result = executeSQL(sql);
+                if (!isPass(result)) {
+                    LOGGER.info("核心系统【" + moduleName + "】模块下定时任务【" + jobName + "】下的规则【" + ruleDesc + "】校验未通过。");
+                    errList.add("核心系统【" + moduleName + "】模块下定时任务【" + jobName + "】下的规则【" + ruleDesc + "】校验未通过。");
+                }
+            }
 
             if(errList != null && errList.size() > 0) {
                 String message = StringUtils.join(errList.toArray(),"\n");
                 emailService.sendEmail(message);
             }
         } catch (Exception e) {
+            LOGGER.error("批处理运行异常", e);
             emailService.sendEmail(e.getMessage());
         }
+
     }
 }

@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class MQTerminateDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("XQ","6");
+        run("XQ",new Long(6));
     }
 }

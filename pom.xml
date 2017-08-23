@@ -166,14 +166,15 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <version>1.4.7</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.oracle.weblogic</groupId>
-            <artifactId>weblogic</artifactId>
-            <version>12.2.1.2</version>
-        </dependency>
+        <!--weblogic-->
+        <!--<dependency>-->
+            <!--<groupId>com.oracle.weblogic</groupId>-->
+            <!--<artifactId>weblogic</artifactId>-->
+            <!--<version>12.2.1.2</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

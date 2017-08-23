@@ -4,6 +4,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 
 public class ExtraDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("QD","1");
+        run("QD",new Long(1));
     }
 }

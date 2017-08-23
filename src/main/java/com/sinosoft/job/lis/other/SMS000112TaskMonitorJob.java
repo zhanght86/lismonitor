@@ -4,6 +4,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 
 public class SMS000112TaskMonitorJob extends LisJobTemplate {
     public void execute() {
-        run("OTHER","1");
+        run("SMS",new Long(1));
     }
 }

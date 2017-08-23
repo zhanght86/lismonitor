@@ -4,6 +4,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 
 public class ClaimDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("LP","1");
+        run("LP",new Long(1));
     }
 }

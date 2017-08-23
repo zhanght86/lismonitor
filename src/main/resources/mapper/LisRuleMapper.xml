@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosoft.dao.LisRuleMapper">
+  <resultMap id="BaseResultMap" type="com.sinosoft.domain.LisRule">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="RULESQL" jdbcType="VARCHAR" property="rulesql" />
+    <result column="RULE" jdbcType="VARCHAR" property="rule" />
+    <result column="MODULEID" jdbcType="VARCHAR" property="moduleid" />
+    <result column="JOBID" jdbcType="BIGINT" property="jobid" />
+    <result column="STATE" jdbcType="BIGINT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RULESQL, RULE, MODULEID, JOBID, STATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lisrule
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from lisrule
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from lisrule
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sinosoft.domain.LisRule">
+    insert into lisrule (ID, RULESQL, RULE, 
+      MODULEID, JOBID, STATE
+      )
+    values (#{id,jdbcType=BIGINT}, #{rulesql,jdbcType=VARCHAR}, #{rule,jdbcType=VARCHAR}, 
+      #{moduleid,jdbcType=VARCHAR}, #{jobid,jdbcType=BIGINT}, #{state,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sinosoft.domain.LisRule">
+    insert into lisrule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rulesql != null">
+        RULESQL,
+      </if>
+      <if test="rule != null">
+        RULE,
+      </if>
+      <if test="moduleid != null">
+        MODULEID,
+      </if>
+      <if test="jobid != null">
+        JOBID,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rulesql != null">
+        #{rulesql,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleid != null">
+        #{moduleid,jdbcType=VARCHAR},
+      </if>
+      <if test="jobid != null">
+        #{jobid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sinosoft.domain.LisRule">
+    update lisrule
+    <set>
+      <if test="rulesql != null">
+        RULESQL = #{rulesql,jdbcType=VARCHAR},
+      </if>
+      <if test="rule != null">
+        RULE = #{rule,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleid != null">
+        MODULEID = #{moduleid,jdbcType=VARCHAR},
+      </if>
+      <if test="jobid != null">
+        JOBID = #{jobid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sinosoft.domain.LisRule">
+    update lisrule
+    set RULESQL = #{rulesql,jdbcType=VARCHAR},
+      RULE = #{rule,jdbcType=VARCHAR},
+      MODULEID = #{moduleid,jdbcType=VARCHAR},
+      JOBID = #{jobid,jdbcType=BIGINT},
+      STATE = #{state,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

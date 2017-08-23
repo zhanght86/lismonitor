@@ -36,7 +36,7 @@
         <logger name="org.mybatis" level="INFO"></logger>
         <logger name="org.quartz" level="INFO"></logger>
         <logger name="org.apache" level="INFO"></logger>
-        <logger name="javax.mail" level="INFO"></logger>
+        <logger name="javax.mail" level="OFF"></logger>
         <!--         建立一个默认的root的logger -->
         <root level="INFO">
             <appender-ref ref="RollingFile"/>

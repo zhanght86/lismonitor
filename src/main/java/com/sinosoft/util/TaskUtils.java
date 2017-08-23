@@ -12,6 +12,7 @@ public class TaskUtils {
     public final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(TaskUtils.class);
 
     public static void invokMethod(ScheduleJob scheduleJob) {
+        LOGGER.info("START!任务名称 = [" + scheduleJob.getJobName() + "]----------运行开始");
         Object object = null;
         Class clazz = null;
         if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
@@ -53,6 +54,6 @@ public class TaskUtils {
                 LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
             }
         }
-        LOGGER.info("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
+        LOGGER.info("SUCCESS!任务名称 = [" + scheduleJob.getJobName() + "]----------运行结束");
     }
 }

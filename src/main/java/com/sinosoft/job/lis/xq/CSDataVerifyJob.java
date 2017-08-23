@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class CSDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("XQ","1");
+        run("XQ",new Long(1));
     }
 }

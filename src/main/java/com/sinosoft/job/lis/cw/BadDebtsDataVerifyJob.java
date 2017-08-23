@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class BadDebtsDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("CW","2");
+        run("CW",new Long(2));
     }
 }

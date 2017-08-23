@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinosoft.dao.LisJobMapper">
+  <resultMap id="BaseResultMap" type="com.sinosoft.domain.LisJob">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <id column="MODULEID" jdbcType="VARCHAR" property="moduleid" />
+    <result column="JOB" jdbcType="VARCHAR" property="job" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, MODULEID, JOB
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.sinosoft.domain.LisJobKey" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from lisjob
+  where ID = #{id,jdbcType=BIGINT}
+  and MODULEID = #{moduleid,jdbcType=VARCHAR}
+</select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from lisjob
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.sinosoft.domain.LisJobKey">
+    delete from lisjob
+    where ID = #{id,jdbcType=BIGINT}
+      and MODULEID = #{moduleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sinosoft.domain.LisJob">
+    insert into lisjob (ID, MODULEID, JOB
+      )
+    values (#{id,jdbcType=BIGINT}, #{moduleid,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sinosoft.domain.LisJob">
+    insert into lisjob
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="moduleid != null">
+        MODULEID,
+      </if>
+      <if test="job != null">
+        JOB,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="moduleid != null">
+        #{moduleid,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sinosoft.domain.LisJob">
+    update lisjob
+    <set>
+      <if test="job != null">
+        JOB = #{job,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+      and MODULEID = #{moduleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sinosoft.domain.LisJob">
+    update lisjob
+    set JOB = #{job,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+      and MODULEID = #{moduleid,jdbcType=VARCHAR}
+  </update>
+</mapper>
