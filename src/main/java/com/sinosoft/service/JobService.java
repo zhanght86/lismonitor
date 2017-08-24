@@ -16,8 +16,12 @@ public class JobService {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(JobService.class);
 
-    @Autowired
     private LisJobMapper lisJobMapper;
+
+    @Autowired
+    public void setLisJobMapper(LisJobMapper lisJobMapper) {
+        this.lisJobMapper = lisJobMapper;
+    }
 
     /**
      * 查询moduleID下的所有任务

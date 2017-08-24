@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class NoticeBookVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("XQ",new Long(3));
+        run("XQ",3L);
     }
 }

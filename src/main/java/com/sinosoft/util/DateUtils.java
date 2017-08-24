@@ -3,7 +3,7 @@ package com.sinosoft.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtils {
+public final class DateUtils {
     /**
      * 得到当前系统日期
      *

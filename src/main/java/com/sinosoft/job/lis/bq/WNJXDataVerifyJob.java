@@ -9,6 +9,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 public class WNJXDataVerifyJob extends LisJobTemplate {
 
     public void execute() {
-        run("BQ",new Long(2));
+        run("BQ",2L);
     }
 }

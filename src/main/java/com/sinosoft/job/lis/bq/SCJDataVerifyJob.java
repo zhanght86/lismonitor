@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class SCJDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("BQ",new Long(3));
+        run("BQ",3L);
     }
 }

@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class HXDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("XQ",new Long(2));
+        run("XQ",2L);
     }
 }

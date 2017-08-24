@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class CertificateDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("CW",new Long(3));
+        run("CW",3L);
     }
 }

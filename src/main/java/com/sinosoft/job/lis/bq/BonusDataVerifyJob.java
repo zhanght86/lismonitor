@@ -8,6 +8,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 public class BonusDataVerifyJob extends LisJobTemplate {
 
     public void execute() {
-        run("BQ",new Long(1));
+        run("BQ",1L);
     }
 }

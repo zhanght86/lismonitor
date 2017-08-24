@@ -4,6 +4,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
 
 public class YBChargeFeeVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("QD",new Long(2));
+        run("QD",2L);
     }
 }

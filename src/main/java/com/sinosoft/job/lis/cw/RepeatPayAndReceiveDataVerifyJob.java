@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class RepeatPayAndReceiveDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("CW",new Long(1));
+        run("CW", 1L);
     }
 }

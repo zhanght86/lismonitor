@@ -13,11 +13,19 @@ public class EmailService {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
-    @Autowired
-    MailSender mailSender;
+    private MailSender mailSender;
+
+    private SimpleMailMessage mailMessage;
 
     @Autowired
-    SimpleMailMessage mailMessage;
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    @Autowired
+    public void setMailMessage(SimpleMailMessage mailMessage) {
+        this.mailMessage = mailMessage;
+    }
 
     public void sendEmail(String text) {
 //        LOGGER.info("<<<<<<<<开始发送邮件>>>>>>>>>" + text);

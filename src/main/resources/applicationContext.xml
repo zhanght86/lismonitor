@@ -44,7 +44,7 @@
     </bean>
 
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
-    <bean id="springUtils" class="com.sinosoft.util.SpringUtils" />
+    <!--<bean id="springUtils" class="com.sinosoft.util.SpringUtils" />-->
     <!--本地数据源配置-->
     <bean name="dataSource_LOCAL" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="${driver}" />

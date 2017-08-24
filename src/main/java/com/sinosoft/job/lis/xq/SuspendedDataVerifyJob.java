@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class SuspendedDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("XQ",new Long(4));
+        run("XQ",4L);
     }
 }

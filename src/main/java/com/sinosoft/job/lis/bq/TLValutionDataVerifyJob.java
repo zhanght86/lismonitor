@@ -7,6 +7,6 @@ import com.sinosoft.job.lis.LisJobTemplate;
  * */
 public class TLValutionDataVerifyJob extends LisJobTemplate {
     public void execute() {
-        run("BQ",new Long(4));
+        run("BQ",4L);
     }
 }

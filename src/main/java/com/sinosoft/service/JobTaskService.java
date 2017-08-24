@@ -21,11 +21,19 @@ import java.util.Set;
 public class JobTaskService {
     public final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JobTaskService.class);
 
-    @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
 
-    @Autowired
     private ScheduleJobMapper scheduleJobMapper;
+
+    @Autowired
+    public void setSchedulerFactoryBean(SchedulerFactoryBean schedulerFactoryBean) {
+        this.schedulerFactoryBean = schedulerFactoryBean;
+    }
+
+    @Autowired
+    public void setScheduleJobMapper(ScheduleJobMapper scheduleJobMapper) {
+        this.scheduleJobMapper = scheduleJobMapper;
+    }
 
     public List<ScheduleJob> getAllTask() {
         return scheduleJobMapper.getAll();
@@ -107,8 +115,6 @@ public class JobTaskService {
     @PostConstruct
     public void init() throws Exception {
 
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-
         // 这里获取任务信息数据
         List<ScheduleJob> jobList = scheduleJobMapper.getAll();
 
@@ -121,7 +127,7 @@ public class JobTaskService {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
+        List<ScheduleJob> jobList = new ArrayList<>();
         for (JobKey jobKey : jobKeys) {
             List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
             for (Trigger trigger : triggers) {
@@ -145,7 +151,7 @@ public class JobTaskService {
     public List<ScheduleJob> getRunningJob() throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
-        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>(executingJobs.size());
+        List<ScheduleJob> jobList = new ArrayList<>(executingJobs.size());
         for (JobExecutionContext executingJob : executingJobs) {
             ScheduleJob job = new ScheduleJob();
             JobDetail jobDetail = executingJob.getJobDetail();

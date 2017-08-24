@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -16,8 +15,12 @@ public class RuleService {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(RuleService.class);
 
-    @Autowired
     private LisRuleMapper lisRuleMapper;
+
+    @Autowired
+    public void setLisRuleMapper(LisRuleMapper lisRuleMapper) {
+        this.lisRuleMapper = lisRuleMapper;
+    }
 
     /**
      * 根据模块和任务获取所有规则
@@ -26,13 +29,10 @@ public class RuleService {
         List<LisRule> lisRules = lisRuleMapper.getAll();
         List<LisRule> resultLisRules = new ArrayList<>();
 
-        Iterator<LisRule> lisRulesIt = lisRules.iterator();
-
-        while (lisRulesIt.hasNext()) {
-            LisRule lisRule = lisRulesIt.next();
+        for (LisRule lisRule : lisRules) {
             if (lisRule.getJobid().longValue() == jobid.longValue()
                     && lisRule.getModuleid().equals(moduleid)
-                    && 0 == lisRule.getState().longValue()) {
+                    && 0 == lisRule.getState()) {
                 resultLisRules.add(lisRule);
             }
         }

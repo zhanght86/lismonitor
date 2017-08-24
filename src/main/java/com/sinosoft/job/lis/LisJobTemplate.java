@@ -59,9 +59,8 @@ public class LisJobTemplate {
         LinkedHashMap<String, Object> linkedHashMap = linkedHashMapList.get(0);
 
         //MySQL返回Long类型，Oracle返回BigDecimal类型
-        boolean ispass = linkedHashMap.containsValue(new Long(1))
+        return linkedHashMap.containsValue(1L)
                 || linkedHashMap.containsValue(new BigDecimal(1));
-        return ispass;
     }
 
     /** 执行**模块下的**定时任务 */
@@ -97,8 +96,7 @@ public class LisJobTemplate {
                     errList.add("核心系统【" + moduleName + "】模块下定时任务【" + jobName + "】下的规则【" + ruleDesc + "】校验未通过。");
                 }
             }
-
-            if(errList != null && errList.size() > 0) {
+            if(errList.size() > 0) {
                 String message = StringUtils.join(errList.toArray(),"\n");
                 emailService.sendEmail(message);
             }

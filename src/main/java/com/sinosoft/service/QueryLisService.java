@@ -15,8 +15,12 @@ public class QueryLisService {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(QueryLisService.class);
 
-    @Autowired
     private SQLManagerMapper sqlManagerMapper;
+
+    @Autowired
+    public void setSqlManagerMapper(SQLManagerMapper sqlManagerMapper) {
+        this.sqlManagerMapper = sqlManagerMapper;
+    }
 
     public List<LinkedHashMap<String, Object>> queryLis(String sql) {
         //记录当前时间点

@@ -14,7 +14,7 @@ public class TaskUtils {
     public static void invokMethod(ScheduleJob scheduleJob) {
         LOGGER.info("START!任务名称 = [" + scheduleJob.getJobName() + "]----------运行开始");
         Object object = null;
-        Class clazz = null;
+        Class clazz;
         if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
             object = SpringUtils.getBean(scheduleJob.getSpringId());
         } else if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
@@ -34,23 +34,13 @@ public class TaskUtils {
         Method method = null;
         try {
             method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
-        } catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException | SecurityException e) {
             LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]---------------未启动成功，方法名设置错误！！！");
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         if (method != null) {
             try {
                 method.invoke(object);
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
-            } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
-            } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 LOGGER.error("任务名称 = [" + scheduleJob.getJobName() + "]----------启动异常", e);
             }
         }

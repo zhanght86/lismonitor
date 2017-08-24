@@ -14,6 +14,6 @@ public class ContDataVerifyJob extends LisJobTemplate {
 
         LOGGER.info("ContDataVerify 开始跑批： " + DateUtils.getCurrentDateTime());
 
-        run("QY",new Long(1));
+        run("QY",1L);
     }
 }
