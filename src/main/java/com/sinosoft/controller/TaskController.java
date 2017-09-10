@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     /** 查询所有任务GET(含状态) */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<ScheduleJob> getTasks(HttpServletRequest request) {
         List<ScheduleJob> taskList = null;
@@ -59,14 +59,14 @@ public class TaskController {
     }
 
     /** 查询某条任务 */
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ScheduleJob getOneTask(@PathVariable Long id, HttpServletRequest request) {
         return jobTaskService.getTaskById(id);
     }
 
     /** 新增一条任务 */
-    @RequestMapping(value="/new", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResultObj _new(String scheduleJobJSON, HttpServletRequest request) {
         ScheduleJob scheduleJob = (ScheduleJob) JSON.parse(scheduleJobJSON);
@@ -129,13 +129,12 @@ public class TaskController {
     }
 
     /** 删除一条任务 */
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResultObj _delete(@PathVariable Long id, HttpServletRequest request) {
         resultObj.setFlag(false);
         try {
-            ScheduleJob scheduleJob = jobTaskService.getTaskById(id);
-            jobTaskService.deleteJob(scheduleJob);
+            jobTaskService.deleteTask(id);
         } catch (Exception e) {
             LOGGER.error("删除任务失败，请确认该任务是否存在！", e);
             resultObj.setFlag(false);
@@ -147,7 +146,7 @@ public class TaskController {
     }
 
     /** 更新某条任务的部分信息 */
-    @RequestMapping(value="/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value="/{id}", method = RequestMethod.PATCH, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public ResultObj _update(@PathVariable Long id, HttpServletRequest request) {
         resultObj.setFlag(false);

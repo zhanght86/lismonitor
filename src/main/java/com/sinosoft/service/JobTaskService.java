@@ -76,6 +76,15 @@ public class JobTaskService {
 
     }
 
+    public void deleteTask(Long jobId) throws SchedulerException {
+        ScheduleJob job = getTaskById(jobId);
+        if (job == null) {
+            return;
+        }
+        deleteJob(job);
+        scheduleJobMapper.deleteByPrimaryKey(jobId);
+    }
+
     public void addJob(ScheduleJob job) throws SchedulerException {
         if (job == null || !ScheduleJob.STATUS_RUNNING.equals(job.getJobStatus())) {
             return;
@@ -172,12 +181,15 @@ public class JobTaskService {
         return jobList;
     }
 
+    /** 暂停任务 */
     public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.pauseJob(jobKey);
+
     }
 
+    /** 恢复任务 */
     public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
